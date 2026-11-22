@@ -1,5 +1,28 @@
 # Linear Pipeline Agents
 
+## Cloud preparation and offline audit
+
+All four live shell entrypoints are inert by default. Running them without
+`LINEAR_PIPELINE_ENABLE_LIVE=1` exits before configuration, network, process or
+repository operations. Cloud setup must never supply this opt-in.
+
+For source inspection, use the installed Python standard library only:
+
+```bash
+python3 tools/cloud_audit.py
+python3 tools/test_cloud_gate.py
+```
+
+Use `true` as the Cloud install script, no startup service, no credentials, and
+owner-only access. Disable public internet and package-manager domains for audits.
+Publishing an environment does not prove native integration or product readiness;
+verify the intended integration with a bounded task separately.
+
+Existing operators who deliberately intend live operations must explicitly run
+`LINEAR_PIPELINE_ENABLE_LIVE=1 bash setup.sh` and
+`LINEAR_PIPELINE_ENABLE_LIVE=1 bash start.sh`. The old live behavior remains behind
+that gate. The quick-start instructions below require the same explicit opt-in.
+
 An automated pipeline that uses Claude Code CLI to drive Linear cards through a full development lifecycle — from architectural review to implementation, testing, QA, and deployment — with specialized AI agents at each stage. Each agent reads the card context from Linear, performs its role (review code, write code, run tests, write docs), posts results as comments, and the pipeline driver advances the card to the next status based on those comments.
 
 ## How It Works
