@@ -1,4 +1,10 @@
 #!/bin/bash
+# Live operations are opt-in; cloud preparation and audits stay inert.
+if [[ "${LINEAR_PIPELINE_ENABLE_LIVE:-}" != "1" ]]; then
+  printf '%s\n' 'Live pipeline disabled. Static audit: python3 tools/cloud_audit.py'
+  exit 0
+fi
+# End live-operation gate.
 # ─────────────────────────────────────────────────────────────────
 # Linear Pipeline Agents — Interactive Setup
 #
